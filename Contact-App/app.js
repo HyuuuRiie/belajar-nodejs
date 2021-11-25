@@ -25,18 +25,47 @@ yargs.command({
   handler(argv) {
     contacts.simpanContact(argv.nama, argv.email, argv.nohp);
   },
-}); 
+}).demandCommand(); 
 
+//menampilkan daftar kontak
+yargs.command({
+  command : 'list',
+  describe : 'Menampilkan daftar kontak',
+  handler() {
+    contacts.listContact(); 
+  },
+});
+///menampilkan detail contact berdasar nama
+yargs.command({
+  command : 'detail',
+  describe : 'Menampilkan detail kontak',
+  builder : {
+    nama :{
+      describe : 'Nama Lengkap',
+      demandOption : true,
+      type : 'string',
+    },
+  },
+  handler(argv) {
+    contacts.detailContact(argv.nama); 
+  },
+
+});
+///menghapus kontak berdasarkan nama
+yargs.command({
+  command : 'delete',
+  describe : 'Menghapus detail kontak',
+  builder : {
+    nama :{
+      describe : 'Nama Lengkap',
+      demandOption : true,
+      type : 'string',
+    },
+  },
+  handler(argv) {
+    contacts.deleteContact(argv.nama); 
+  },
+
+});
 yargs.parse();
 
-// const main = async () =>{
-//   const nama = await contacts.tulisPertanyaan('Masukkan Nama :');
-//   const nohp = await contacts.tulisPertanyaan('Masukkan No HP :');
-//   const email = await contacts.tulisPertanyaan('Masukkan Email :');
-
-//   contacts.simpanContact(nama, email, nohp);
-// };
-// main();
-
-///mengambil argumen dari command line
-// console.log(process.argv);
